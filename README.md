@@ -1,249 +1,352 @@
-# Image-Handling-and-Pixel-Transformations-Using-OpenCV 
 
-## AIM:
-Write a Python program using OpenCV that performs the following tasks:
+# Experiment 1: Basic Image Processing Using OpenCV
+### Name : HARISH KUMAR S
+### Reg no: 212224230091
 
-1) Read and Display an Image.  
-2) Adjust the brightness of an image.  
-3) Modify the image contrast.  
-4) Generate a third image using bitwise operations.
+## AIM
 
-## Software Required:
-- Anaconda - Python 3.7
-- Jupyter Notebook (for interactive development and execution)
+To perform basic image-processing operations on an input image using
+Python and OpenCV, including drawing shapes and text, color-space
+conversion, pixel modification, resizing, cropping, flipping, and saving
+the processed image.
 
-## Algorithm:
-### Step 1:
-Load an image from your local directory and display it.
+## Input Image
 
-### Step 2:
-Create a matrix of ones (with data type float64) to adjust brightness.
+<img width="1086" height="1448" alt="hari" src="https://github.com/user-attachments/assets/bb68172c-5dae-4c12-8c43-2a296bf95d5a" />
 
-### Step 3:
-Create brighter and darker images by adding and subtracting the matrix from the original image.  
-Display the original, brighter, and darker images.
 
-### Step 4:
-Modify the image contrast by creating two higher contrast images using scaling factors of 1.1 and 1.2 (without overflow fix).  
-Display the original, lower contrast, and higher contrast images.
 
-### Step 5:
-Split the image (boy.jpg) into B, G, R components and display the channels
 
-## Program Developed By:
-- **Name:** G.Ramanujam 
-- **Register Number:** 212224240129
 
-  ### Ex. No. 01
-  ### Image Handling and Pixel Transformations Using OpenCV
-  **Name:** G.Ramanujam    **Reg.No:** 212224240129
-#### 1. Read the image ('Eagle_in_Flight.jpg') using OpenCV imread() as a grayscale image.
+## PROCEDURE
+
+1.  Import the required libraries: OpenCV (`cv2`) and Matplotlib
+    (`matplotlib.pyplot`).
+2.  Read the input image `Qno. 1.jpg` from the local directory using
+    `cv2.imread()`.
+3.  Convert the image from BGR to RGB format and display the original
+    image.
+4.  Draw a line from the top-left to the bottom-right of the image.
+5.  Draw a circle at the center of the image, draw a rectangle around
+    the image, and add the text **OpenCV Drawing**.
+6.  Convert the RGB image into HSV, grayscale, and YCrCb color spaces
+    and display each result.
+7.  Convert the HSV image back into RGB format and display it.
+8.  Access the pixel at coordinate `(100, 100)` and print its value.
+    Modify the required pixel or region to white.
+9.  Resize the original image to half its width and height.
+10. Crop a region of interest (ROI) from the image and display it.
+11. Flip the original image horizontally and vertically and display both
+    results.
+12. Save the final processed image using `cv2.imwrite()`.
+
+
+
+## PROGRAM
+
+### 1. Import Libraries and Display Original Image
+
 ```python
 import cv2
-import numpy as np
 import matplotlib.pyplot as plt
-img=cv2.imread("Eagle_in_Flight.jpg",0)
-```
 
-#### 2. Print the image width, height & Channel.
-```python
-img.shape
-```
+# Read the image
+img = cv2.imread('hari.jpeg', cv2.IMREAD_COLOR)
 
-#### 3. Display the image using matplotlib imshow().
-```python
-plt.imshow(img)
-plt.title('BGR Image')
-plt.axis('on')
-plt.show()
-```
-
-#### 4. Save the image as a PNG file using OpenCV imwrite().
-```python
-cv2.imwrite('Eagle.png',img)
-```
-
-#### 5. Read the saved image above as a color image using cv2.cvtColor().
-```python
-img = cv2.imread('Eagle_in_Flight.jpg')  
+# Convert BGR to RGB
 img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-```
 
-#### 6. Display the Colour image using matplotlib imshow() & Print the image width, height & channel.
-```python
+# Display original image
 plt.imshow(img_rgb)
+plt.title("Original Image")
+plt.axis('off')
 plt.show()
 ```
 
-#### 7. Crop the image to extract any specific (Eagle alone) object from the image.
+### 2. Drawing a Line
+
 ```python
-crop = img_rgb[0:450,200:550] 
-plt.imshow(crop[:,:,::1])
-plt.title("Cropped Region")
+image = cv2.imread('hari.jpeg')
+img_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+line_img = cv2.line(img_rgb, (0, 0), (900, 1200), (255, 0, 0), 10)
+
+plt.imshow(line_img)
+plt.title("Image with Line")
+plt.axis('off')
+plt.show()
+```
+
+### 3. Drawing a Circle
+
+```python
+image = cv2.imread('hari.jpeg')
+img_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+circle_img = cv2.circle(img_rgb, (450, 400), 250, (255, 0, 0), 10)
+
+plt.imshow(circle_img)
+plt.title("Image with Circle")
+plt.axis('off')
+plt.show()
+```
+
+### 4. Drawing a Rectangle
+
+```python
+image = cv2.imread('hari.jpeg')
+img_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+rectangle_img = cv2.rectangle(img_rgb, (100, 50), (750, 600), (0, 0, 255), 10)
+
+plt.imshow(rectangle_img)
+plt.title("Image with Rectangle")
+plt.axis('off')
+plt.show()
+```
+
+### 5. Adding Text to Image
+
+```python
+image = cv2.imread('hari.jpeg')
+img_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+text_img = cv2.putText(
+    img_rgb,
+    "OpenCV Drawing",
+    (10, 30),
+    cv2.FONT_HERSHEY_SIMPLEX,
+    1,
+    (0, 0, 0),
+    10
+)
+
+plt.imshow(text_img)
+plt.title("Image with Text")
+plt.axis('off')
+plt.show()
+```
+
+### 6. Color Space Conversion
+
+```python
+image = cv2.imread('hari.jpeg')
+image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+# RGB Image
+plt.imshow(image_rgb)
+plt.title("Original RGB Image")
 plt.axis("off")
 plt.show()
-crop.shape
-```
 
-#### 8. Resize the image up by a factor of 2x.
-```python
-res=cv2.resize(crop,None,fx=50,fy=50,interpolation=cv2.INTER_LINEAR)
-```
+# RGB to HSV
+image_hsv = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2HSV)
 
-#### 9. Flip the cropped/resized image horizontally.
-```python
-flipped_img=cv2.flip(crop,1)
-```
-
-#### 10. Read in the image ('Apollo-11-launch.jpg').
-```python
-img=cv2.imread('Apollo-11-launch.jpg',cv2.IMREAD_COLOR)
-img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-img_rgb.shape
-```
-
-#### 11. Add the following text to the dark area at the bottom of the image (centered on the image):
-```python
-text=cv2.putText(img_rgb,"Apollo 11 Saturn V Launch",(300, 700),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2)
-plt.imshow(text)
-plt.title('New Image')
-plt.show()
-```
-
-#### 12. Draw a magenta rectangle that encompasses the launch tower and the rocket.
-```python
-rcol= (255, 0, 255)
-cv2.rectangle(img_rgb, (400, 100), (800, 650), rcol, 3)
-```
-
-#### 13. Display the final annotated image.
-```python
-plt.title("Annotated image")
-plt.imshow(img_rgb)
-plt.show()
-```
-
-#### 14. Read the image ('Boy.jpg').
-```python
-img =cv2.imread('boy.jpg',cv2.IMREAD_COLOR)
-img_rgb= cv2.cvtColor(img, cv2.COLOR_BGR2RGB) 
-```
-
-#### 15. Adjust the brightness of the image.
-```python
-m = np.ones(img_rgb.shape, dtype="uint8") * 50
-```
-
-#### 16. Create brighter and darker images.
-```python
-img_brighter = cv2.add(img_rgb, m)  
-img_darker = cv2.subtract(img_rgb, m)  
-```
-
-#### 17. Display the images (Original Image, Darker Image, Brighter Image).
-```python
-plt.figure(figsize=(10,5))
-plt.subplot(1,3,1), plt.imshow(img_rgb), plt.title("Original Image"), plt.axis("off")
-plt.subplot(1,3,2), plt.imshow(img_brighter), plt.title("Brighter Image"), plt.axis("off")
-plt.subplot(1,3,3), plt.imshow(img_darker), plt.title("Darker Image"), plt.axis("off")
-plt.show()
-```
-
-#### 18. Modify the image contrast.
-```python
-matrix1 = np.ones(img_rgb.shape, dtype="float32") * 1.1
-matrix2 = np.ones(img_rgb.shape, dtype="float32") * 1.2
-img_higher1 = cv2.multiply(img.astype("float32"), matrix1).clip(0,255).astype("uint8")
-img_higher2 = cv2.multiply(img.astype("float32"), matrix2).clip(0,255).astype("uint8")
-```
-
-#### 19. Display the images (Original, Lower Contrast, Higher Contrast).
-```python
-plt.figure(figsize=(10,5))
-plt.subplot(1,3,1), plt.imshow(img), plt.title("Original Image"), plt.axis("off")
-plt.subplot(1,3,2), plt.imshow(img_higher1), plt.title("Higher Contrast (1.1x)"), plt.axis("off")
-plt.subplot(1,3,3), plt.imshow(img_higher2), plt.title("Higher Contrast (1.2x)"), plt.axis("off")
-plt.show()
-```
-
-#### 20. Split the image (boy.jpg) into the B,G,R components & Display the channels.
-```python
-b, g, r = cv2.split(img)
-plt.figure(figsize=(10,5))
-plt.subplot(1,3,1), plt.imshow(b, cmap='gray'), plt.title("Blue Channel"), plt.axis("off")
-plt.subplot(1,3,2), plt.imshow(g, cmap='gray'), plt.title("Green Channel"), plt.axis("off")
-plt.subplot(1,3,3), plt.imshow(r, cmap='gray'), plt.title("Red Channel"), plt.axis("off")
-plt.show()
-```
-
-#### 21. Merged the R, G, B , displays along with the original image
-```python
-merged_rgb = cv2.merge([r, g, b])
-plt.figure(figsize=(5,5))
-plt.imshow(merged_rgb)
-plt.title("Merged RGB Image")
+plt.imshow(image_hsv)
+plt.title("HSV Image")
 plt.axis("off")
 plt.show()
-```
 
-#### 22. Split the image into the H, S, V components & Display the channels.
-```python
-hsv_img = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
-h, s, v = cv2.split(hsv_img)
-plt.figure(figsize=(10,5))
-plt.subplot(1,3,1), plt.imshow(h, cmap='gray'), plt.title("Hue Channel"), plt.axis("off")
-plt.subplot(1,3,2), plt.imshow(s, cmap='gray'), plt.title("Saturation Channel"), plt.axis("off")
-plt.subplot(1,3,3), plt.imshow(v, cmap='gray'), plt.title("Value Channel"), plt.axis("off")
+# RGB to Grayscale
+image_gray = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2GRAY)
+
+plt.imshow(image_gray, cmap='gray')
+plt.title("Grayscale Image")
+plt.axis("off")
 plt.show()
-```
-#### 23. Merged the H, S, V, displays along with original image.
-```python
-merged_hsv = cv2.cvtColor(cv2.merge([h, s, v]), cv2.COLOR_HSV2RGB)
-combined = np.concatenate((img_rgb, merged_hsv), axis=1)
-plt.figure(figsize=(10, 5))
-plt.imshow(combined)
-plt.title("Original Image  &  Merged HSV Image")
+
+# RGB to YCrCb
+image_ycrcb = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2YCrCb)
+
+plt.imshow(image_ycrcb)
+plt.title("YCrCb Image")
+plt.axis("off")
+plt.show()
+
+# HSV to RGB
+image_hsv_to_rgb = cv2.cvtColor(image_hsv, cv2.COLOR_HSV2RGB)
+
+plt.imshow(image_hsv_to_rgb)
+plt.title("HSV to RGB Image")
 plt.axis("off")
 plt.show()
 ```
 
-## Output:
-- **i)** Read and Display an Image.  
-- **ii)** Adjust Image Brightness.  
-- **iii)** Modify Image Contrast.  
-- **iv)** Generate Third Image Using Bitwise Operations.
+### 7. Pixel Transformation
+
+```python
+image = cv2.imread('hari.jpeg')
+
+# Modify pixel region to white
+image[200:600, 200:800] = [255, 255, 255]
+
+image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+plt.imshow(image_rgb)
+plt.title("Modified Image")
+plt.axis("off")
+plt.show()
+```
+
+### 8. Resizing Image
+
+```python
+image = cv2.imread('hari.jpeg')
+
+print(image.shape)
+
+# Resize image to half size
+resized_image = cv2.resize(image, (768 // 2, 600 // 2))
+
+resized_image_rgb = cv2.cvtColor(resized_image, cv2.COLOR_BGR2RGB)
+
+print(resized_image_rgb.shape)
+
+plt.imshow(resized_image_rgb)
+plt.title("Resized Image")
+plt.axis("off")
+plt.show()
+```
+
+### 9. Cropping Image (ROI)
+
+```python
+image = cv2.imread('hari.jpeg')
+
+print(image.shape)
+
+# Crop a region of interest
+roi = image[50:350, 50:350]
+
+roi_rgb = cv2.cvtColor(roi, cv2.COLOR_BGR2RGB)
+
+plt.imshow(roi_rgb)
+plt.title("Cropped Region of Interest")
+plt.axis("off")
+plt.show()
+```
+
+### 10. Horizontal Flip
+
+```python
+image = cv2.imread('hari.jpeg')
+
+flipped_horizontally = cv2.flip(image, 1)
+
+flipped_horizontally_rgb = cv2.cvtColor(
+    flipped_horizontally, cv2.COLOR_BGR2RGB
+)
+
+plt.imshow(flipped_horizontally_rgb)
+plt.title("Flipped Horizontally")
+plt.axis("off")
+plt.show()
+```
+
+### 11. Vertical Flip
+
+```python
+flipped_vertically = cv2.flip(image, 0)
+
+flipped_vertically_rgb = cv2.cvtColor(
+    flipped_vertically, cv2.COLOR_BGR2RGB
+)
+
+plt.imshow(flipped_vertically_rgb)
+plt.title("Flipped Vertically")
+plt.axis("off")
+plt.show()
+```
+
+### 12. Saving Processed Image
+
+```python
+cv2.imwrite("hari.jpeg", image)
+
+print("Image saved successfully")
+```
 
 
-<img width="299" height="393" alt="Screenshot 2026-11-17 224539" src="https://github.com/user-attachments/assets/f361e1a5-5367-432f-8e50-59d30da272bf" />
+## OUTPUT
 
-<img width="281" height="390" alt="Screenshot 2026-11-17 224544" src="https://github.com/user-attachments/assets/95413588-4b41-4172-ad08-3c3002176291" />
+The following outputs are obtained after executing the program:
 
-<img width="274" height="396" alt="Screenshot 2026-11-17 224548" src="https://github.com/user-attachments/assets/3893733e-87ed-47d7-bb53-3409174f8a22" />
+### 1.  Original input image displayed.
 
-<img width="298" height="395" alt="Screenshot 2026-11-17 224550" src="https://github.com/user-attachments/assets/09e7428c-0603-4389-addd-6824e4184118" />
+<img width="1086" height="1448" alt="hari" src="https://github.com/user-attachments/assets/e265e21b-8ab4-4190-97d0-bdb0101b9256" /><img width="299" height="393" alt="Screenshot 2026-11-17 224539" src="https://github.com/user-attachments/assets/f21ea45d-3133-4fb0-968d-88f52d01cfcd" />
 
-<img width="327" height="388" alt="Screenshot 2026-11-17 224553" src="https://github.com/user-attachments/assets/c4d7b621-ac76-4c9e-b933-bdc4774dd9e8" />
 
-<img width="316" height="395" alt="Screenshot 2026-11-17 224555" src="https://github.com/user-attachments/assets/948d6a71-0a41-4263-88aa-687614e6eb27" />
 
-<img width="396" height="403" alt="Screenshot 2026-11-17 224558" src="https://github.com/user-attachments/assets/18607458-3d5b-4317-a8f6-faef0c2858d8" />
+### 2.  Image with a diagonal line drawn from top-left to bottom-right.
 
-<img width="285" height="390" alt="Screenshot 2026-11-17 224600" src="https://github.com/user-attachments/assets/751e855b-6520-4a49-b81d-05c8376673ac" />
+<img width="281" height="390" alt="Screenshot 2026-11-17 224544" src="https://github.com/user-attachments/assets/33eda77f-3186-4b3b-819e-f9e4761c679a" />
 
-<img width="331" height="402" alt="Screenshot 2026-11-17 224604" src="https://github.com/user-attachments/assets/afb6f500-a4d0-4976-94ac-38cb9671b922" />
 
-<img width="312" height="397" alt="Screenshot 2026-11-17 224607" src="https://github.com/user-attachments/assets/e51b67f4-3d2b-4c2d-890d-922fa0032d9e" />
 
-<img width="361" height="400" alt="Screenshot 2026-11-17 224610" src="https://github.com/user-attachments/assets/ae3fe12e-470a-48a1-a28b-cbb8797e6b3f" />
+### 3.  Image with a circle at its center.
 
-<img width="545" height="396" alt="Screenshot 2026-11-17 224613" src="https://github.com/user-attachments/assets/95a3e2ea-f737-4a7c-96d0-037623c0fc9b" />
+<img width="274" height="396" alt="Screenshot 2026-11-17 224548" src="https://github.com/user-attachments/assets/0ac6206f-511c-466f-94b0-ddb6bb19786b" />
 
-<img width="411" height="387" alt="Screenshot 2026-11-17 224616" src="https://github.com/user-attachments/assets/f0a66f9e-dbab-464a-9a1d-9db25b025b5b" />
 
-<img width="366" height="402" alt="Screenshot 2026-11-17 224620" src="https://github.com/user-attachments/assets/46419f7e-4d6c-4285-bc9e-e6dbeda377e6" />
+### 4.  Image with a rectangular border.
 
-<img width="402" height="405" alt="Screenshot 2026-11-17 224623" src="https://github.com/user-attachments/assets/d1c74435-7c2a-449e-a603-138f6b1289e7" />
+<img width="298" height="395" alt="Screenshot 2026-11-17 224550" src="https://github.com/user-attachments/assets/6e742492-fc7f-4ee5-809f-095d01007267" />
 
-## Result:
-Thus, the images were read, displayed, brightness and contrast adjustments were made, and bitwise operations were performed successfully using the Python program.
 
+
+### 5.  Image displaying the text **OpenCV Drawing**.
+
+<img width="327" height="388" alt="Screenshot 2026-11-17 224553" src="https://github.com/user-attachments/assets/b9e93304-a803-4c4c-8bc8-1b2d923b0955" />
+
+
+### 6.  HSV, grayscale, and YCrCb versions of the image.
+
+<img width="396" height="403" alt="Screenshot 2026-11-17 224558" src="https://github.com/user-attachments/assets/8ac48d40-2418-4594-ac80-8b32fed57991" />
+
+
+<img width="285" height="390" alt="Screenshot 2026-11-17 224600" src="https://github.com/user-attachments/assets/a93db81f-4035-4843-b4c1-8a9e390f0a7f" />
+
+
+
+<img width="331" height="402" alt="Screenshot 2026-11-17 224604" src="https://github.com/user-attachments/assets/52c91cf5-42cd-4da6-b189-6fab257f97f8" />
+
+
+
+### 7.  Image converted from HSV back to RGB.
+
+<img width="312" height="397" alt="Screenshot 2026-11-17 224607" src="https://github.com/user-attachments/assets/1a506e2e-ae2c-4a97-af1e-b9b6f864a148" />
+
+
+### 8.  Image with the selected pixel changed to white.
+
+<img width="361" height="400" alt="Screenshot 2026-11-17 224610" src="https://github.com/user-attachments/assets/e13c4c79-b5e7-4659-841d-9b0825b06f25" />
+
+
+### 9.  Resized image with half the original width and height.
+
+<img width="545" height="396" alt="Screenshot 2026-11-17 224613" src="https://github.com/user-attachments/assets/1be00f85-a7a6-40fb-8ab7-8bd681a479c4" />
+
+
+### 10. Cropped region of interest (ROI).
+
+<img width="411" height="387" alt="Screenshot 2026-11-17 224616" src="https://github.com/user-attachments/assets/cb3213a4-589d-48de-861f-879947260625" />
+
+
+### 11. Horizontally flipped image.
+
+<img width="366" height="402" alt="Screenshot 2026-11-17 224620" src="https://github.com/user-attachments/assets/7fdfaec4-fcdf-45f3-83e3-8d0da87cb5e5" />
+
+
+### 12. Vertically flipped image.
+
+<img width="402" height="405" alt="Screenshot 2026-11-17 224623" src="https://github.com/user-attachments/assets/6132c112-779d-49db-977e-af4444c0514a" />
+
+
+
+
+## RESULT
+
+Thus, basic image-processing operations such as image loading,
+displaying, drawing, color-space conversion, pixel modification,
+resizing, cropping, flipping, and saving were performed successfully
+using Python and OpenCV.
